@@ -1,5 +1,5 @@
-﻿#ifndef __TDynamicMatrix_H__
-#define __TDynamicMatrix_H__
+﻿#ifndef __TTriangleDynamicMatrix_H__
+#define __TTriangleDynamicMatrix_H__
 
 #include <iostream>
 #include "TVector.h"
@@ -7,38 +7,38 @@
 using namespace std;
 
 template<class T>
-class TDynamicMatrix : protected TDynamicVector<TDynamicVector<T>>
+class TTriangleDynamicMatrix : protected TDynamicVector<TDynamicVector<T>>
 {
   using TDynamicVector<TDynamicVector<T>>::pMem;
   using TDynamicVector<TDynamicVector<T>>::len;
 public:
   using TDynamicVector<TDynamicVector<T>>::operator[];
   using TDynamicVector<TDynamicVector<T>>::size;
-  TDynamicMatrix();
-  TDynamicMatrix(int n);
-  TDynamicMatrix(const TDynamicMatrix<T>& m);
-  bool operator==(const TDynamicMatrix<T>& m);
-  bool operator!=(const TDynamicMatrix<T>& m);
-  TDynamicMatrix<T> operator*(const T& v);
+  TTriangleDynamicMatrix();
+  TTriangleDynamicMatrix(int n);
+  TTriangleDynamicMatrix(const TTriangleDynamicMatrix<T>& m);
+  bool operator==(const TTriangleDynamicMatrix<T>& m);
+  bool operator!=(const TTriangleDynamicMatrix<T>& m);
+  TTriangleDynamicMatrix<T> operator*(const T& v);
   TDynamicVector<T> operator*(TDynamicVector<T>& v);
-  TDynamicMatrix<T> operator+(const TDynamicMatrix<T>& m);
-  TDynamicMatrix<T> operator-(const TDynamicMatrix<T>& m);
-  TDynamicMatrix<T> operator*(const TDynamicMatrix<T>& m);
-  TDynamicMatrix<T> operator=(const TDynamicMatrix<T>& m);
-  friend istream& operator>>(istream& istr, const TDynamicMatrix<T>& m);
-  friend ostream& operator<<(ostream& ostr, const TDynamicMatrix<T>& m);
+  TTriangleDynamicMatrix<T> operator+(const TTriangleDynamicMatrix<T>& m);
+  TTriangleDynamicMatrix<T> operator-(const TTriangleDynamicMatrix<T>& m);
+  TTriangleDynamicMatrix<T> operator*(const TTriangleDynamicMatrix<T>& m);
+  TTriangleDynamicMatrix<T> operator=(const TTriangleDynamicMatrix<T>& m);
+  friend istream& operator>>(istream& istr, const TTriangleDynamicMatrix<T>& m);
+  friend ostream& operator<<(ostream& ostr, const TTriangleDynamicMatrix<T>& m);
 };
 #endif
 
 template<class T>
-inline TDynamicMatrix<T>::TDynamicMatrix()
+inline TTriangleDynamicMatrix<T>::TTriangleDynamicMatrix()
 {
   this->len = NULL;
   this->pMem = nullptr;
 }
 
 template<class T>
-inline TDynamicMatrix<T>::TDynamicMatrix(int n)
+inline TTriangleDynamicMatrix<T>::TTriangleDynamicMatrix(int n)
 {
   if (n <= 0) throw "error";
   this->len = n;
@@ -50,7 +50,7 @@ inline TDynamicMatrix<T>::TDynamicMatrix(int n)
 }
 
 template<class T>
-inline TDynamicMatrix<T>::TDynamicMatrix(const TDynamicMatrix<T>& m)
+inline TTriangleDynamicMatrix<T>::TTriangleDynamicMatrix(const TTriangleDynamicMatrix<T>& m)
 {
   if (m.len == 0)
     this->pMem = 0;
@@ -62,28 +62,28 @@ inline TDynamicMatrix<T>::TDynamicMatrix(const TDynamicMatrix<T>& m)
 }
 
 template<class T>
-inline bool TDynamicMatrix<T>::operator==(const TDynamicMatrix<T>& m)
+inline bool TTriangleDynamicMatrix<T>::operator==(const TTriangleDynamicMatrix<T>& m)
 {
   return TDynamicVector < TDynamicVector<T>> :: operator==(m);
 }
 
 template<class T>
-inline bool TDynamicMatrix<T>::operator!=(const TDynamicMatrix<T>& m)
+inline bool TTriangleDynamicMatrix<T>::operator!=(const TTriangleDynamicMatrix<T>& m)
 {
   return TDynamicVector < TDynamicVector<T>> :: operator!=(m);
 }
 
 template<class T>
-inline TDynamicMatrix<T> TDynamicMatrix<T>::operator*(const T& v)
+inline TTriangleDynamicMatrix<T> TTriangleDynamicMatrix<T>::operator*(const T& v)
 {
-  TDynamicMatrix<T> res(*this);
+  TTriangleDynamicMatrix<T> res(*this);
   for (int i = 0; i < len; i++)
     res.pMem[i] = pMem[i] * v;
   return res;
 }
 
 template<class T>
-inline TDynamicVector<T> TDynamicMatrix<T>::operator*(TDynamicVector<T>& v)
+inline TDynamicVector<T> TTriangleDynamicMatrix<T>::operator*(TDynamicVector<T>& v)
 {
   if (this->len != v.size()) throw "error";
   TDynamicVector<T> res(this->len);
@@ -97,30 +97,30 @@ inline TDynamicVector<T> TDynamicMatrix<T>::operator*(TDynamicVector<T>& v)
 }
 
 template<class T>
-inline TDynamicMatrix<T> TDynamicMatrix<T>::operator+(const TDynamicMatrix<T>& m)
+inline TTriangleDynamicMatrix<T> TTriangleDynamicMatrix<T>::operator+(const TTriangleDynamicMatrix<T>& m)
 {
   if (m.len != len) throw "error";
-  TDynamicMatrix<T> res(*this);
+  TTriangleDynamicMatrix<T> res(*this);
   for (int i = 0; i < len; i++)
     res.pMem[i] = pMem[i] + m.pMem[i];
   return res;
 }
 
 template<class T>
-inline TDynamicMatrix<T> TDynamicMatrix<T>::operator-(const TDynamicMatrix<T>& m)
+inline TTriangleDynamicMatrix<T> TTriangleDynamicMatrix<T>::operator-(const TTriangleDynamicMatrix<T>& m)
 {
   if (m.len != len) throw "error";
-  TDynamicMatrix<T> res(*this);
+  TTriangleDynamicMatrix<T> res(*this);
   for (int i = 0; i < len; i++)
     res.pMem[i] = pMem[i] - m.pMem[i];
   return res;
 }
 
 template<class T>
-inline TDynamicMatrix<T> TDynamicMatrix<T>::operator*(const TDynamicMatrix<T>& m)
+inline TTriangleDynamicMatrix<T> TTriangleDynamicMatrix<T>::operator*(const TTriangleDynamicMatrix<T>& m)
 {
   if (m.len != len) throw "error";
-  TDynamicMatrix<T> res(*this);
+  TTriangleDynamicMatrix<T> res(*this);
   for (int i = 0; i < len; i++)
     for (int j = 0; j <= i; j++)
     {
@@ -132,14 +132,14 @@ inline TDynamicMatrix<T> TDynamicMatrix<T>::operator*(const TDynamicMatrix<T>& m
 }
 
 template<class T>
-inline TDynamicMatrix<T> TDynamicMatrix<T>::operator=(const TDynamicMatrix<T>& m)
+inline TTriangleDynamicMatrix<T> TTriangleDynamicMatrix<T>::operator=(const TTriangleDynamicMatrix<T>& m)
 {
   TDynamicVector<TDynamicVector<T>>::operator=(m);
   return *this;
 }
 
 template<class T>
-std::istream& operator>>(std::istream& istr, TDynamicMatrix<T>& m)
+std::istream& operator>>(std::istream& istr, TTriangleDynamicMatrix<T>& m)
 {
   std::cout << "Enter your matrix = " << std::endl;
   for (int i = 0; i < m.size(); i++)
@@ -153,7 +153,7 @@ std::istream& operator>>(std::istream& istr, TDynamicMatrix<T>& m)
 }
 
 template<class T>
-std::ostream& operator<<(std::ostream& ostr, TDynamicMatrix<T>& m)
+std::ostream& operator<<(std::ostream& ostr, TTriangleDynamicMatrix<T>& m)
 {
   for (int i = 0; i < m.size(); i++)
   {

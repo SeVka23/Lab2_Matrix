@@ -1,5 +1,5 @@
 #include "gtest.h"
-#include "TMatrix.h"
+#include "TTriangleMatrix.h"
 
 TEST(TDynamicVector, can_create_vector_with_positive_length)
 {
